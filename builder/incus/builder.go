@@ -32,8 +32,9 @@ func (b *Builder) Prepare(raws ...interface{}) ([]string, []string, error) {
 	if errs != nil {
 		return nil, nil, errs
 	}
+	buildGeneratedData := []string{"Alias"}
 
-	return nil, nil, nil
+	return buildGeneratedData, nil, nil
 }
 
 func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook) (packersdk.Artifact, error) {
@@ -54,6 +55,10 @@ func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook)
 	state.Put("hook", hook)
 	state.Put("ui", ui)
 	state.Put("wrappedCommand", CommandWrapper(wrappedCommand))
+
+	state.Put("generated_data", map[string]interface{}{
+		"Alias": b.config.OutputImage,
+	})
 
 	// Run
 	b.runner = commonsteps.NewRunnerWithPauseFn(steps, b.config.PackerConfig, ui, state)
