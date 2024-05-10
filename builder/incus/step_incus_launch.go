@@ -52,8 +52,13 @@ func (s *stepIncusLaunch) Run(ctx context.Context, state multistep.StateBag) mul
 	// TODO: Should we check `lxc info <container>` for "Running"?
 	// We have to do this so /tmp doesn't get cleared and lose our provisioner scripts.
 
-	time.Sleep(time.Duration(sleep_seconds) * time.Second)
 	log.Printf("Sleeping for %d seconds...", sleep_seconds)
+	time.Sleep(time.Duration(sleep_seconds) * time.Second)
+	// instance_id is the generic term used so that users can have access
+	// to the instance id (through the `ID` property) inside the
+	// provisioner, used in step_provision.
+	state.Put("instance_id", name)
+	ui.Message(fmt.Sprintf("Instance Name: %s", name))
 	return multistep.ActionContinue
 }
 
