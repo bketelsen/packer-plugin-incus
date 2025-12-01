@@ -25,6 +25,7 @@ func (s *StepProvision) Run(ctx context.Context, state multistep.StateBag) multi
 	comm := &Communicator{
 		ContainerName: config.ContainerName,
 		CmdWrapper:    wrappedCommand,
+		Project:       config.Project,
 	}
 
 	// Loads hook data from builder's state, if it has been set.

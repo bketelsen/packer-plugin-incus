@@ -25,6 +25,7 @@ type FlatConfig struct {
 	CommandWrapper      *string           `mapstructure:"command_wrapper" required:"false" cty:"command_wrapper" hcl:"command_wrapper"`
 	Image               *string           `mapstructure:"image" required:"true" cty:"image" hcl:"image"`
 	Profile             *string           `mapstructure:"profile" cty:"profile" hcl:"profile"`
+	Project             *string           `mapstructure:"project" cty:"project" hcl:"project"`
 	InitSleep           *string           `mapstructure:"init_sleep" required:"false" cty:"init_sleep" hcl:"init_sleep"`
 	PublishProperties   map[string]string `mapstructure:"publish_properties" required:"false" cty:"publish_properties" hcl:"publish_properties"`
 	LaunchConfig        map[string]string `mapstructure:"launch_config" required:"false" cty:"launch_config" hcl:"launch_config"`
@@ -59,6 +60,7 @@ func (*FlatConfig) HCL2Spec() map[string]hcldec.Spec {
 		"command_wrapper":            &hcldec.AttrSpec{Name: "command_wrapper", Type: cty.String, Required: false},
 		"image":                      &hcldec.AttrSpec{Name: "image", Type: cty.String, Required: false},
 		"profile":                    &hcldec.AttrSpec{Name: "profile", Type: cty.String, Required: false},
+		"project":                    &hcldec.AttrSpec{Name: "project", Type: cty.String, Required: false},
 		"init_sleep":                 &hcldec.AttrSpec{Name: "init_sleep", Type: cty.String, Required: false},
 		"publish_properties":         &hcldec.AttrSpec{Name: "publish_properties", Type: cty.Map(cty.String), Required: false},
 		"launch_config":              &hcldec.AttrSpec{Name: "launch_config", Type: cty.Map(cty.String), Required: false},

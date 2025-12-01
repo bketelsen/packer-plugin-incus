@@ -36,6 +36,7 @@ type Config struct {
 	// E.G. my-base-image, ubuntu-daily:x, 08fababf6f27, ...
 	Image   string `mapstructure:"image" required:"true"`
 	Profile string `mapstructure:"profile"`
+	Project string `mapstructure:"project"`
 	// The number of seconds to sleep between launching
 	// the incus instance and provisioning it; defaults to 3 seconds.
 	InitSleep string `mapstructure:"init_sleep" required:"false"`
@@ -88,6 +89,10 @@ func (c *Config) Prepare(raws ...interface{}) error {
 
 	if c.Profile == "" {
 		c.Profile = "default"
+	}
+
+	if c.Project == "" {
+		c.Project = "default"
 	}
 
 	// Sadly we have to wait a few seconds for /tmp to be intialized and networking
