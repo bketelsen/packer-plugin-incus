@@ -26,7 +26,7 @@ func (s *stepIncusLaunch) Run(ctx context.Context, state multistep.StateBag) mul
 	vm := fmt.Sprintf("--vm=%s", strconv.FormatBool(config.VirtualMachine))
 
 	launch_args := []string{
-		"launch", "--ephemeral=false", vm, profile, image, name,
+		"launch", "--project", config.Project, "--ephemeral=false", vm, profile, image, name,
 	}
 
 	for k, v := range config.LaunchConfig {
@@ -71,7 +71,7 @@ func (s *stepIncusLaunch) Cleanup(state multistep.StateBag) {
 	}
 
 	cleanup_args := []string{
-		"delete", "--force", config.ContainerName,
+		"delete", "--project", config.Project, "--force", config.ContainerName,
 	}
 
 	ui.Say("Unregistering and deleting deleting container...")

@@ -29,7 +29,7 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 	name := config.ContainerName
 	stop_args := []string{
 		// We created the container with "--ephemeral=false" so we know it is safe to stop.
-		"stop", name,
+		"stop", "--project", config.Project, name,
 	}
 
 	ui.Say("Stopping container...")
@@ -46,7 +46,7 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 	}
 
 	publish_args := []string{
-		"publish", name, remote, "--alias", config.OutputImage,
+		"publish", "--project", config.Project, name, remote, "--alias", config.OutputImage,
 	}
 
 	if config.Reuse {

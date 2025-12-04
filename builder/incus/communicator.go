@@ -20,6 +20,7 @@ import (
 type Communicator struct {
 	ContainerName string
 	CmdWrapper    CommandWrapper
+	Project       string
 }
 
 func (c *Communicator) Start(ctx context.Context, cmd *packersdk.RemoteCmd) error {
@@ -79,7 +80,7 @@ func (c *Communicator) Upload(dst string, r io.Reader, fi *os.FileInfo) error {
 		fileDestination = filepath.Join(c.ContainerName, dst, (*fi).Name())
 	}
 
-	cpCmd, err := c.CmdWrapper(fmt.Sprintf("incus file push - %s", fileDestination))
+	cpCmd, err := c.CmdWrapper(fmt.Sprintf("incus file push --project %s - %s", c.Project, fileDestination))
 	if err != nil {
 		return err
 	}
@@ -137,7 +138,7 @@ func (c *Communicator) DownloadDir(src string, dst string, exclude []string) err
 func (c *Communicator) Execute(commandString string) (*exec.Cmd, error) {
 	log.Printf("Executing with incus exec in container: %s %s", c.ContainerName, commandString)
 	command, err := c.CmdWrapper(
-		fmt.Sprintf("incus exec %s -- /bin/sh -c \"%s\"", c.ContainerName, commandString))
+		fmt.Sprintf("incus exec --project %s %s -- /bin/sh -c \"%s\"", c.Project, c.ContainerName, commandString))
 	if err != nil {
 		return nil, err
 	}
