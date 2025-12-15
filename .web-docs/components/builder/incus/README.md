@@ -83,6 +83,8 @@ build {
 
 - `profile` (string) - Profile
 
+- `project` (string) - Project
+
 - `init_sleep` (string) - The number of seconds to sleep between launching
   the incus instance and provisioning it; defaults to 3 seconds.
 

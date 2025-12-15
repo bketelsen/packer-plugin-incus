@@ -97,7 +97,7 @@ func (c *Communicator) UploadDir(dst string, src string, exclude []string) error
 	if !strings.HasSuffix(src, "/") {
 		src += "/"
 	}
-	pushCommand := fmt.Sprintf("incus file push --debug -pr %s* %s", src, fileDestination)
+	pushCommand := fmt.Sprintf("incus file push --project %s --debug -pr %s* %s", c.Project, src, fileDestination)
 	log.Printf(pushCommand)
 	cp, err := c.CmdWrapper(pushCommand)
 	if err != nil {
