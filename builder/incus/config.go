@@ -35,7 +35,7 @@ type Config struct {
 	// container. This can be a (local or remote) image (name or fingerprint).
 	// E.G. my-base-image, ubuntu-daily:x, 08fababf6f27, ...
 	Image   string `mapstructure:"image" required:"true"`
-	Profile map[string]string `mapstructure:"profile"`
+	Profile []string `mapstructure:"profile"`
 	Project string `mapstructure:"project"`
 	// The number of seconds to sleep between launching
 	// the incus instance and provisioning it; defaults to 3 seconds.
@@ -88,7 +88,7 @@ func (c *Config) Prepare(raws ...interface{}) error {
 	}
 
 	if c.Profile == [] {
-		c.Profile = ["default"]
+		c.Profile = []string{"default"}
 	}
 
 	if c.Project == "" {
