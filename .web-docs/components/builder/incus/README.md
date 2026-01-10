@@ -81,7 +81,7 @@ build {
   with ssh for a remote build host. Defaults to `{{.Command}}`; i.e. no
   wrapper.
 
-- `profile` (string) - Profile
+- `profile` ([]string) - Profile
 
 - `project` (string) - Project
 
