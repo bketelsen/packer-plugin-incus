@@ -34,7 +34,11 @@ type Config struct {
 	// The source image to use when creating the build
 	// container. This can be a (local or remote) image (name or fingerprint).
 	// E.G. my-base-image, ubuntu-daily:x, 08fababf6f27, ...
-	Image   string   `mapstructure:"image" required:"true"`
+	Image string `mapstructure:"image" required:"true"`
+	// One or more Incus profiles to apply to the container or virtual machine.
+	// Profiles define base configuration, such as devices and limits, that is
+	// merged into the instance. Multiple profiles can be specified, and if none
+	// are provided this defaults to the "default" profile.
 	Profile []string `mapstructure:"profile"`
 	Project string   `mapstructure:"project"`
 	// The number of seconds to sleep between launching
