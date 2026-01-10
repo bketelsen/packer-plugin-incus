@@ -1,6 +1,6 @@
 module github.com/bketelsen/packer-plugin-incus
 
-go 1.23.0
+go 1.23
 
 require (
 	github.com/hashicorp/hcl/v2 v2.24.0
