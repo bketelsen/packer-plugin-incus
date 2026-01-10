@@ -34,9 +34,13 @@ type Config struct {
 	// The source image to use when creating the build
 	// container. This can be a (local or remote) image (name or fingerprint).
 	// E.G. my-base-image, ubuntu-daily:x, 08fababf6f27, ...
-	Image   string `mapstructure:"image" required:"true"`
-	Profile string `mapstructure:"profile"`
-	Project string `mapstructure:"project"`
+	Image string `mapstructure:"image" required:"true"`
+	// One or more Incus profiles to apply to the container or virtual machine.
+	// Profiles define base configuration, such as devices and limits, that is
+	// merged into the instance. Multiple profiles can be specified, and if none
+	// are provided this defaults to the "default" profile.
+	Profile []string `mapstructure:"profile"`
+	Project string   `mapstructure:"project"`
 	// The number of seconds to sleep between launching
 	// the incus instance and provisioning it; defaults to 3 seconds.
 	InitSleep string `mapstructure:"init_sleep" required:"false"`
@@ -87,8 +91,8 @@ func (c *Config) Prepare(raws ...interface{}) error {
 		errs = packersdk.MultiErrorAppend(errs, fmt.Errorf("`image` is a required parameter for incus. Please specify an image by alias or fingerprint. e.g. `ubuntu-daily:x`"))
 	}
 
-	if c.Profile == "" {
-		c.Profile = "default"
+	if len(c.Profile) == 0 {
+		c.Profile = []string{"default"}
 	}
 
 	if c.Project == "" {
