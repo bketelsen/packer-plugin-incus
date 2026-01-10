@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	"time"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
 	packersdk "github.com/hashicorp/packer-plugin-sdk/packer"
