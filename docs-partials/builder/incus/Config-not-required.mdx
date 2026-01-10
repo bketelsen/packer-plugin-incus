@@ -14,7 +14,10 @@
   with ssh for a remote build host. Defaults to `{{.Command}}`; i.e. no
   wrapper.
 
-- `profile` ([]string) - Profile
+- `profile` ([]string) - One or more Incus profiles to apply to the container or virtual machine.
+  Profiles define base configuration, such as devices and limits, that is
+  merged into the instance. Multiple profiles can be specified, and if none
+  are provided this defaults to the "default" profile.
 
 - `project` (string) - Project
 
