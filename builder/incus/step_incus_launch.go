@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
@@ -23,12 +22,18 @@ func (s *stepIncusLaunch) Run(ctx context.Context, state multistep.StateBag) mul
 
 	name := config.ContainerName
 	image := config.Image
-	profile := "--profile=" + strings.Join(config.Profile, " --profile=")
+	profile := config.Profile
 	vm := fmt.Sprintf("--vm=%s", strconv.FormatBool(config.VirtualMachine))
 
 	launch_args := []string{
-		"launch", "--project", config.Project, "--ephemeral=false", vm, profile, image, name,
+		"launch", "--project", config.Project, "--ephemeral=false", vm, image, name,
 	}
+
+	for i, p := range profile {
+		profile[i] = "--profile=" + p
+	}
+
+	launch_args = append(launch_args, profile...)
 
 	for k, v := range config.LaunchConfig {
 		launch_args = append(launch_args, "--config", fmt.Sprintf("%s=%s", k, v))
